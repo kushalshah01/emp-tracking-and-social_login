@@ -1,0 +1,71 @@
+<nav
+  class="navbar navbar-expand-lg navbar-light bg-white justify-content-between"
+>
+  <div class="container">
+    <a class="navbar-brand"
+      ><img width="150" src="../../../assets/images/my-logo.png"
+    /></a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      (click)="IsshowNav = !IsshowNav"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div
+      class="d-none d-lg-block d-xl-block d-md-block"
+      [ngClass]="{ 'show-navigation': IsshowNav === true }"
+    >
+      <ul class="navbar-nav mr-auto header-nav">
+        <li class="nav-item active">
+          <a class="nav-link" [routerLink]="['/emp-landing']"
+            >Home <span class="sr-only">(current)</span></a
+          >
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" [routerLink]="['/emp-landing/about-us']"
+            >About us</a
+          >
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" [routerLink]="['/emp-landing/events']"
+            >Services</a
+          >
+        </li>
+
+        <!-- <li class="nav-item active text-info" *ngIf="isEmployeeLoggedIn">
+          {{ loggedInUser.firstName }}
+        </li> -->
+
+        <li class="nav-item active" *ngIf="!isEmployeeLoggedIn">
+          <a class="nav-link" [routerLink]="['/auth/signin']">Sign in</a>
+        </li>
+
+        <li *ngIf="isCheckIn && isEmployeeLoggedIn">
+          <button class="btn btn-warning btn-sm mt-1" (click)="viewMap()">
+            View Map
+          </button>
+          &nbsp;
+        </li>
+        <li *ngIf="isEmployeeLoggedIn && !isCheckIn">
+          <button class="btn btn-warning btn-sm mt-1" (click)="checkIn()">
+            Checkin
+          </button>
+          &nbsp;
+        </li>
+        <li *ngIf="isEmployeeLoggedIn && isCheckIn">
+          <button class="btn btn-info btn-sm mt-1" (click)="checkOut()">
+            Checkout
+          </button>
+        </li>
+        &nbsp;
+        <li *ngIf="isEmployeeLoggedIn">
+          <button class="btn btn-danger btn-sm mt-1" (click)="logout()">
+            Logout
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,22 @@
+
+.mt-100 {
+    margin-top: 100px;
+}
+
+.font-18  {
+    font-size: 18px;
+}
+
+footer {
+    background: #F4F5F6;
+}
+
+.updates, #section1 {
+    background: white;
+}
+
+@media only screen and (max-width: 992px) {
+    .mt-sm-0 {
+        margin-top: 0px;
+    }
+}

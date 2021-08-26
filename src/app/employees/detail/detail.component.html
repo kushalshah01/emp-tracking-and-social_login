@@ -1,0 +1,149 @@
+<div class="modal-header">
+  <h4 class="modal-title">Employee Detail</h4>
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="activeModal.dismiss('Cross click')"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-md-12">
+      <form>
+        <div class="row">
+          <div class="col-lg-4 col-sm-12 text-center">
+            <img
+              class="img-radius"
+              width="100"
+              src="../../../assets/images/user/user.png"
+              *ngIf="!employeeData.profileImage || employeeData.profileImage ==''"
+            />
+            <img
+              class="img-radius"
+              width="100"
+              src="{{employeeData.profileImage}}"
+              *ngIf="!!employeeData.profileImage && employeeData.profileImage !==''"
+            />
+          </div>
+          <div class="col-lg-8 col-sm-12">
+            <div class="col-form-label">
+              <span class="col-lg-1 pl-0"
+                ><i class="fa fa-user-circle" aria-hidden="true"></i
+              ></span>
+              {{ employeeData.firstName }} {{ employeeData.lastName }}
+            </div>
+            <div class="col-form-label pt-0">
+              <span class="col-lg-1 pl-0"
+                ><i class="fa fa-envelope" aria-hidden="true"></i
+              ></span>
+              {{ employeeData.email }}
+            </div>
+            <div class="col-form-label pt-0">
+              <span class="col-lg-1 pl-0"
+                ><i class="fa fa-phone-square" aria-hidden="true"></i
+              ></span>
+              {{ getPhone(employeeData.mobileNumber) }}
+            </div>
+          </div>
+        </div>
+        <hr />
+
+        <!-- <div class="form-group m-0 row">
+                    <label for="firstName" class="col-sm-4 col-form-label"><b>First Name</b></label>
+                    <div class="col-sm-8 col-form-label">
+                        {{employeeData.firstName}}
+                        
+                    </div>
+                </div>
+
+                <div class="form-group m-0 row">
+
+                    <label for="lastName" class="col-sm-4 col-form-label"><b>Last Name</b></label>
+                    <div class="col-sm-8 col-form-label">
+                        {{employeeData.lastName}}
+                       
+
+                    </div>
+                </div>
+
+                <div class="form-group m-0 row">
+                    <label for="lastName" class="col-sm-4 col-form-label"><b>Email</b></label>
+                    <div class="col-sm-8 col-form-label">
+                        {{employeeData.email}}
+                       
+                    </div>
+                </div> 
+                 <div class="form-group m-0 row mt-20">
+                    <label for="lastName" class="col-sm-4 col-form-label"><b>Phone</b></label>
+                    <div class="col-sm-8 col-form-label">
+                    {{employeeData.mobileNumber}}
+                       
+                    </div>
+                </div>
+<div class="row m-0">
+                    <label for="birthDate" class="col-sm-4 col-form-label"><b>Birth Date</b></label>
+                    <div class="col-sm-8 col-form-label">
+                        <div class="input-group">
+                           
+{{employeeData.birthDate.day}} - {{employeeData.birthDate.month}} - {{employeeData.birthDate.year}}
+                        </div>
+                    </div>
+                </div>
+            -->
+
+        <div class="col-sm-12 col-form-label" *ngIf="!!employeeData.birthDate">
+          <span class="col-lg-1 pl-0"
+            ><i class="fa fa-calendar" aria-hidden="true"></i
+          ></span>
+          {{ employeeData.birthDate.day }} -
+          {{ employeeData.birthDate.month }} - {{ employeeData.birthDate.year }}
+        </div>
+
+        <div class="col-sm-12 col-form-label">
+          <span class="col-lg-1 pl-0"
+            ><i class="fa fa-user" aria-hidden="true"></i
+          ></span>
+          {{ employeeData.gender }}
+        </div>
+
+        <div class="col-sm-12 col-form-label">
+          <span class="col-lg-1 pl-0"
+            ><i class="fa fa-users" aria-hidden="true"></i
+          ></span>
+          {{ employeeData.department }}
+        </div>
+
+        <div class="col-sm-12 col-form-label">
+          <span class="col-lg-1 pl-0"
+            ><i class="fa fa-map-marker" aria-hidden="true"></i
+          ></span>
+          <Span class="col-lg-11 pl-0">{{ employeeData.address }}</Span>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="switch switch-primary d-inline m-r-10">
+              <input
+                type="checkbox"
+                id="IsActive"
+                [(ngModel)]="employeeData.isActive"
+                name="IsActive"
+                disabled
+              />
+              <label class="cr" for="IsActive"></label>
+            </div>
+            <label>Active</label>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- <div class="modal-footer text-center">
+    <button type="button" class="btn btn-outline-dark" (click)="activeModal.close()">
+        Close
+    </button>
+</div> -->

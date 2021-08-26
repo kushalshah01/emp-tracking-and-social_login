@@ -1,0 +1,234 @@
+<div class="auth-wrapper">
+  <div class="auth-content">
+    <div class="card">
+      <div class="row align-items-center text-center">
+        <div class="col-md-12">
+          <div class="card-body">
+            <form
+              [appMatchPassword]="['password', 'cpassword']"
+              #userForm="ngForm"
+              (ngSubmit)="userForm.form.valid && onSubmit()"
+            >
+              <h3 class="mb-3 f-w-400">Sign Up</h3>
+
+              <div class="form-group mb-3">
+                <input
+                  type="text"
+                  name="firstName"
+                  class="form-control"
+                  [(ngModel)]="userModel.firstName"
+                  placeholder="First Name"
+                  #firstName="ngModel"
+                  maxlength="40"
+                  [ngClass]="{
+                    'is-invalid': userForm.submitted && firstName.invalid
+                  }"
+                  required
+                />
+                <div
+                  class="invalid-feedback text-left"
+                  *ngIf="userForm.submitted && firstName.invalid"
+                >
+                  <p *ngIf="firstName.errors.required">
+                    First Name is required
+                  </p>
+                </div>
+              </div>
+
+              <div class="form-group mb-3">
+                <input
+                  type="text"
+                  name="lastName"
+                  class="form-control"
+                  [(ngModel)]="userModel.lastName"
+                  placeholder="Last Name"
+                  #lastName="ngModel"
+                  maxlength="40"
+                  [ngClass]="{
+                    'is-invalid': userForm.submitted && lastName.invalid
+                  }"
+                  required
+                />
+                <div
+                  class="invalid-feedback text-left"
+                  *ngIf="userForm.submitted && lastName.invalid"
+                >
+                  <p *ngIf="lastName.errors.required">Last Name is required</p>
+                </div>
+              </div>
+
+              <div class="form-group mb-3">
+                <input
+                  type="email"
+                  class="form-control"
+                  id="emailId"
+                  name="emailId"
+                  placeholder="Email Address"
+                  [(ngModel)]="userModel.email"
+                  #emailId="ngModel"
+                  pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                  [ngClass]="{
+                    'is-invalid': userForm.submitted && emailId.invalid
+                  }"
+                  required
+                />
+                <div
+                  class="invalid-feedback text-left"
+                  *ngIf="userForm.submitted && emailId.invalid"
+                >
+                  <p *ngIf="emailId.errors.required">Email is required</p>
+                  <p *ngIf="emailId.errors.email">
+                    Enter a valid email address
+                  </p>
+                  <p *ngIf="emailId.errors.pattern">
+                    Enter a valid email address
+                  </p>
+                </div>
+              </div>
+
+              <!-- <div class="form-group mb-3">
+                <input
+                  type="password"
+                  class="form-control"
+                  id="password"
+                  name="password"
+                  placeholder="Password"
+                  [(ngModel)]="userModel.password"
+                  #password="ngModel"
+                  [ngClass]="{
+                    'is-invalid': userForm.submitted && password.invalid
+                  }"
+                  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                  required
+                />
+                <div
+                  class="invalid-feedback"
+                  *ngIf="userForm.submitted && password.invalid"
+                >
+                  <p *ngIf="password.errors.required">Password is required</p>
+                  <p *ngIf="password.errors.pattern">
+                    Password must contain the following: lowercase letter,
+                    capital (uppercase) letter, number, Minimum 8 characters
+                  </p>
+                </div>
+              </div> -->
+
+              <div class="input-group mb-3">
+                <input
+                  [type]="hide ? 'password' : 'text'"
+                  class="form-control p0"
+                  id="pass"
+                  aria-describedby="pass"
+                  placeholder="Enter Password"
+                  [(ngModel)]="userModel.password"
+                  #password="ngModel"
+                  [ngClass]="{
+                    'is-invalid': userForm.submitted && password.invalid
+                  }"
+                  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                  name="password"
+                  required
+                />
+                <div class="input-group-append">
+                  <button
+                    class="btn btn-default"
+                    type="button"
+                    (click)="hide = !hide"
+                  >
+                    <i class="fa fa-eye" *ngIf="hide"></i>
+                    <i class="fa fa-eye-slash" *ngIf="!hide"></i>
+                  </button>
+                </div>
+                <small class="text-info text-left"
+                  >A minimum 8 characters password contains a combination of
+                  uppercase and lowercase letter and number are required.</small
+                >
+
+                <div
+                  class="invalid-feedback text-left"
+                  *ngIf="userForm.submitted && password.invalid"
+                >
+                  <p *ngIf="password.errors.required">Password is required</p>
+                  <p *ngIf="password.errors.pattern">
+                    Password dose not meet requirement
+                  </p>
+                </div>
+              </div>
+
+              <div class="form-group mb-3">
+                <input
+                  type="password"
+                  class="form-control"
+                  id="cpassword"
+                  name="cpassword"
+                  placeholder="Confirm Password"
+                  [(ngModel)]="userModel.confirmPassword"
+                  #cpassword="ngModel"
+                  [ngClass]="{
+                    'is-invalid': userForm.submitted && cpassword.invalid
+                  }"
+                  required
+                />
+                <div
+                  class="invalid-feedback text-left"
+                  *ngIf="userForm.submitted && cpassword.invalid"
+                >
+                  <p *ngIf="cpassword.errors.required">
+                    Confirm Password is required
+                  </p>
+                </div>
+                <div
+                  class="invalid-feedback text-left"
+                  *ngIf="
+                    cpassword.touched && cpassword.errors?.passwordMismatch
+                  "
+                >
+                  Passwords does not match
+                </div>
+              </div>
+
+              <!-- <p>
+                <b>User Type</b>
+              </p>
+              <hr />
+              <div class="custom-control custom-radio custom-control-inline">
+                <input
+                  type="radio"
+                  id="manager"
+                  name="manager"
+                  class="custom-control-input"
+                  value="Manager"
+                  [(ngModel)]="userModel.userType"
+                />
+                <label class="custom-control-label" for="manager"
+                  >Manager</label
+                >
+              </div>
+              <div class="custom-control custom-radio custom-control-inline">
+                <input
+                  type="radio"
+                  id="employee"
+                  name="customRadioInline1"
+                  class="custom-control-input"
+                  value="Employee"
+                  [(ngModel)]="userModel.userType"
+                />
+                <label class="custom-control-label" for="employee"
+                  >Employee</label
+                >
+              </div> -->
+
+              <button class="btn btn-block btn-primary mb-4 mt-20">
+                Sign Up
+              </button>
+              <p class="mb-2">
+                Already have an account?
+                <a [routerLink]="['/auth/signin']" class="f-w-400">Signin</a>
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

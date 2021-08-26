@@ -1,0 +1,72 @@
+<div class="row">
+  <div class="col-sm-12">
+    <app-card [hidHeader]="true" cardClass="user-profile-list">
+      <div class="row align-items-center m-l-0">
+        <div class="col-sm-6"></div>
+        <div class="col-sm-6 text-right">
+          &nbsp;
+
+          <button class="btn btn-icon btn-sm btn-success" routerLink="create" placement="top" ngbTooltip="New Premise">
+            <i class="fas fa-plus-circle"></i></button>&nbsp;
+          <button class="btn btn-icon btn-sm btn-primary" (click)="refreshRecord()" placement="top"
+            ngbTooltip="Refresh">
+            <i class="fas fa-redo"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="dt-responsive table-responsive">
+        <table datatable class="table table-striped row-border" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Country</th>
+              <th>Number Of QR</th>
+              <th>Capacity</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of premisesList; let i = index">
+              <td>
+                <div class="d-inline-block">
+                  <a href="javascript:void(0)">
+                    <h6 class="m-b-0">
+                      {{ data.name }}
+                    </h6>
+                  </a>
+                </div>
+              </td>
+
+              <td>{{ data.country }}</td>
+              <td>15</td>
+              <td>{{ data.capacity }}</td>
+
+              <td>
+                <a href="javascript:void(0)" (click)="setIsActiveRecord(data.isActive, data)" placement="top"
+                  ngbTooltip="Inactivate Premise"><span class="badge badge-primary" *ngIf="data.isActive">Active</span>
+                </a>
+                <a href="javascript:void(0)" (click)="setIsActiveRecord(data.isActive, data)" placement="top"
+                  ngbTooltip="Activate Premise">
+                  <span class="badge badge-danger" *ngIf="!data.isActive">InActive</span>
+                </a>
+              </td>
+              <td>
+                <button type="button" class="btn btn-icon btn-outline-info" placement="top"
+                  ngbTooltip="View Employees Overlay" (click)="viewMap()">
+                  <i class="feather icon-map-pin"></i></button>&nbsp;
+                <button type="button" class="btn btn-icon btn-outline-success" routerLink="/premises/{{ data.id }}"
+                  placement="top" ngbTooltip="Edit">
+                  <i class="feather icon-edit"></i></button>&nbsp;
+                <button type="button" class="btn btn-icon btn-sm btn-outline-danger" (click)="deleteRecord(data)"
+                  placement="top" ngbTooltip="Remove">
+                  <i class="feather icon-trash-2"></i></button>&nbsp;
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </app-card>
+  </div>
+</div>

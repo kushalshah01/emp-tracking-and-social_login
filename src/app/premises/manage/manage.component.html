@@ -1,0 +1,187 @@
+<div class="row btn-page">
+  <div class="col-sm-12">
+    <app-card cardClass="test-cl" cardTitle="{{ title }}">
+      <div class="row mt-20">
+        <div class="col-md-12">
+          <form
+            #premiseForm="ngForm"
+            (ngSubmit)="premiseForm.form.valid && onSubmit()"
+          >
+            <div class="form-group row">
+              <label for="name" class="col-sm-2 col-form-label"
+                >Name</label
+              >
+              <div class="col-sm-6">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="name"
+                  id="name"
+                  placeholder="Premise Name"
+                  [(ngModel)]="premiseModel.name"
+                  #name="ngModel"
+                  maxlength="50"
+                  [ngClass]="{
+                    'is-invalid': premiseForm.submitted && name.invalid
+                  }"
+                  required
+                />
+                <div
+                  class="invalid-feedback"
+                  *ngIf="premiseForm.submitted && name.invalid"
+                >
+                  <p *ngIf="name.errors.required">
+                    Name is required
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="country" class="col-sm-2 col-form-label"
+                >Country</label
+              >
+              <div class="col-sm-6">
+                <select
+                  class="form-control"
+                  id="country"
+                  [(ngModel)]="premiseModel.country"
+                  name="country"
+                  #country="ngModel"
+                  [ngClass]="{
+                    'is-invalid': premiseForm.submitted && country.invalid
+                  }"
+                  required
+                >
+                  <option value="" disabled>Select Country</option>
+                  <option *ngFor="let title of countryList">
+                    {{ title.name }}
+                  </option>
+                </select>
+                <div
+                  class="invalid-feedback"
+                  *ngIf="premiseForm.submitted && country.invalid"
+                >
+                  <p *ngIf="country.errors.required">Country is required</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="location" class="col-sm-2 col-form-label"
+                >Location</label
+              >
+              <div class="col-sm-6">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="location"
+                  id="location"
+                  placeholder="Location"
+                  [(ngModel)]="premiseModel.location"
+                  #location="ngModel"
+                  maxlength="200"
+                  [ngClass]="{
+                    'is-invalid': premiseForm.submitted && location.invalid
+                  }"
+                  required
+                />
+                <div
+                  class="invalid-feedback"
+                  *ngIf="premiseForm.submitted && location.invalid"
+                >
+                  <p *ngIf="location.errors.required">
+                    Location is required
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="location" class="col-sm-2 col-form-label"
+                >Max Capacity</label
+              >
+              <div class="col-sm-6">
+                <input
+                  type="number"
+                  class="form-control"
+                  name="capacity"
+                  id="capacity"
+                  placeholder="Capacity"
+                  [(ngModel)]="premiseModel.capacity"
+                  #capacity="ngModel"
+                  [ngClass]="{
+                    'is-invalid': premiseForm.submitted && capacity.invalid
+                  }"
+                  [customMin]="minCap"
+                  [customMax]="maxCap"
+                  required
+                />
+                <div
+                  class="invalid-feedback"
+                  *ngIf="premiseForm.submitted && capacity.invalid"
+                >
+                  <p *ngIf="capacity.errors.required">
+                    Capacity is required
+                  </p>
+                  <p *ngIf="capacity.errors.customMin">
+                    Minimum required capacity is 1
+                  </p>
+                  <p *ngIf="capacity.errors.customMax">
+                    Maximum capacity can be 10000.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-2"></div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <div class="switch switch-primary d-inline m-r-10">
+                    <input
+                      type="checkbox"
+                      id="IsActive"
+                      [(ngModel)]="premiseModel.isActive"
+                      name="IsActive"
+                    />
+                    <label class="cr" for="IsActive"></label>
+                  </div>
+                  <label>Active</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <label for="location" class="col-sm-2 col-form-label"
+                >Floor Plan</label
+              >
+              <div class="col-md-8">
+                <file-upload
+                  [(ngModel)]="premiseModel.floorPlan"
+                  name="files"
+                ></file-upload>
+              </div>
+            </div>
+
+            <div class="row" style="float: right; margin-bottom: 20px;">
+              <div class="col-sm-8"></div>
+              <div class="clearfix mt-20">
+                <button
+                  type="button"
+                  class="btn btn-outline-dark"
+                  (click)="back()"
+                >
+                  Back</button
+                >&nbsp;&nbsp;
+                <button type="submit" class="btn btn-success pull-right">
+                  Submit
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </app-card>
+  </div>
+</div>

@@ -1,0 +1,321 @@
+<div class="row btn-page">
+  <div class="col-sm-12">
+    <app-card cardClass="test-cl" cardTitle="{{ title }}">
+      <div class="row mt-20 align-items-center">
+        <div class="col-md-2">Upload Profile</div>
+        <div class="custom-file mb-3 col-md-4">
+          <input
+            type="file"
+            class="custom-file-input"
+            id="customFile"
+            name="filename"
+            accept="image/*"
+            (change)="changeListener($event.target.files)"
+          />
+          <label class="custom-file-label" for="customFile"
+            >Choose file
+            <input
+              type="file"
+              class="uploadFile img"
+              value="Upload Photo"
+              style="width: 0px; height: 0px; overflow: hidden;"
+          /></label>
+        </div>
+        <div class="col-md-2 imagePreview text-center">
+          <img
+            *ngIf="
+              !employeeModel.profileImage || employeeModel.profileImage == ''
+            "
+            src="assets/images/user/user.png"
+            width="100"
+            alt="User-Profile-Image"
+          />
+
+          <img
+            *ngIf="
+              !!employeeModel.profileImage || employeeModel.profileImage !== ''
+            "
+            src="{{ employeeModel.profileImage }}"
+            width="100"
+            alt="User-Profile-Image"
+          />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <form
+            #userForm="ngForm"
+            (ngSubmit)="userForm.form.valid && onSubmit()"
+          >
+            <div class="form-group row">
+              <label for="firstName" class="col-sm-2 col-form-label"
+                >First Name</label
+              >
+              <div class="col-sm-6">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="firstName"
+                  id="firstName"
+                  placeholder="First Name"
+                  [(ngModel)]="employeeModel.firstName"
+                  #firstName="ngModel"
+                  maxlength="25"
+                  [ngClass]="{
+                    'is-invalid': userForm.submitted && firstName.invalid
+                  }"
+                  required
+                />
+                <div
+                  class="invalid-feedback"
+                  *ngIf="userForm.submitted && firstName.invalid"
+                >
+                  <p *ngIf="firstName.errors.required">
+                    First Name is required
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="lastName" class="col-sm-2 col-form-label"
+                >Last Name</label
+              >
+              <div class="col-sm-6">
+                <input
+                  type="text"
+                  name="lastName"
+                  class="form-control"
+                  id="lastName"
+                  placeholder="Last Name"
+                  [(ngModel)]="employeeModel.lastName"
+                  #lastName="ngModel"
+                  maxlength="25"
+                  [ngClass]="{
+                    'is-invalid': userForm.submitted && lastName.invalid
+                  }"
+                  required
+                />
+                <div
+                  class="invalid-feedback"
+                  *ngIf="userForm.submitted && lastName.invalid"
+                >
+                  <p *ngIf="lastName.errors.required">
+                    Last Name is required
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="lastName" class="col-sm-2 col-form-label"
+                >Email</label
+              >
+              <div class="col-sm-6">
+                <input
+                  [disabled]="isEdit"
+                  type="email"
+                  class="form-control"
+                  id="emailId"
+                  name="emailId"
+                  placeholder="Email Address"
+                  [(ngModel)]="employeeModel.email"
+                  #emailId="ngModel"
+                  pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                  [ngClass]="{
+                    'is-invalid': userForm.submitted && emailId.invalid
+                  }"
+                  required
+                />
+                <div
+                  class="invalid-feedback"
+                  *ngIf="userForm.submitted && emailId.invalid"
+                >
+                  <p *ngIf="emailId.errors.required">Email is required</p>
+                  <p *ngIf="emailId.errors.email">
+                    Enter a valid email address
+                  </p>
+                  <p *ngIf="emailId.errors.pattern">
+                    Enter a valid email address
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <label for="birthDate" class="col-sm-2 col-form-label"
+                >Birth Date</label
+              >
+              <div class="col-sm-6">
+                <div class="input-group">
+                  <input
+                    class="form-control p0"
+                    placeholder="yyyy-mm-dd"
+                    name="dp"
+                    [(ngModel)]="employeeModel.birthDate"
+                    ngbDatepicker
+                    #d="ngbDatepicker"
+                    [placement]="placement"
+                    [positionTarget]="buttonEl"
+                    [maxDate]="minDate"
+                  />
+                  <div class="input-group-append">
+                    <a
+                      href="javascript:void(0)"
+                      class="input-group-text"
+                      #buttonEl
+                      (click)="d.toggle()"
+                    >
+                      <i class="fa fa-calendar"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row mt-20">
+              <label for="lastName" class="col-sm-2 col-form-label"
+                >Phone</label
+              >
+              <div class="col-sm-6">
+                <ngx-intl-tel-input
+                  [(ngModel)]="employeeModel.mobileNumber"
+                  [cssClass]="'custom'"
+                  [preferredCountries]="['us', 'gb']"
+                  [enablePlaceholder]="true"
+                  [enableAutoCountrySelect]="true"
+                  name="phone"
+                  id="phone"
+                  class="form-control"
+                >
+                </ngx-intl-tel-input>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="lastName" class="col-sm-2 col-form-label"
+                >Gender</label
+              >
+              <div class="col-sm-6">
+                <select
+                  class="form-control"
+                  id="gender"
+                  [(ngModel)]="employeeModel.gender"
+                  name="gender"
+                  #gender="ngModel"
+                  [ngClass]="{
+                    'is-invalid': userForm.submitted && gender.invalid
+                  }"
+                  required
+                >
+                  <option value="" disabled>Select Gender</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="other">Other</option>
+                </select>
+                <div
+                  class="invalid-feedback"
+                  *ngIf="userForm.submitted && gender.invalid"
+                >
+                  <p *ngIf="gender.errors.required">Gender is required</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row mt-20">
+              <label for="department" class="col-sm-2 col-form-label"
+                >Department</label
+              >
+              <div class="col-sm-6">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="department"
+                  id="department"
+                  placeholder="Department"
+                  [(ngModel)]="employeeModel.department"
+                  #department="ngModel"
+                  maxlength="25"
+                  [ngClass]="{
+                    'is-invalid': userForm.submitted && department.invalid
+                  }"
+                  required
+                />
+                <div
+                  class="invalid-feedback"
+                  *ngIf="userForm.submitted && department.invalid"
+                >
+                  <p *ngIf="department.errors.required">
+                    Department is required
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group row mt-20">
+              <label for="address" class="col-sm-2 col-form-label"
+                >Address</label
+              >
+              <div class="col-sm-6">
+                <textarea
+                  class="form-control"
+                  name="address"
+                  id="address"
+                  placeholder="Address"
+                  [(ngModel)]="employeeModel.address"
+                  #address="ngModel"
+                  [ngClass]="{
+                    'is-invalid': userForm.submitted && address.invalid
+                  }"
+                  required
+                ></textarea>
+                <div
+                  class="invalid-feedback"
+                  *ngIf="userForm.submitted && address.invalid"
+                >
+                  <p *ngIf="address.errors.required">
+                    Address is required.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-2"></div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <div class="switch switch-primary d-inline m-r-10">
+                    <input
+                      type="checkbox"
+                      id="IsActive"
+                      [(ngModel)]="employeeModel.isActive"
+                      name="IsActive"
+                    />
+                    <label class="cr" for="IsActive"></label>
+                  </div>
+                  <label>Active</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="row" style="float: right; margin-bottom: 20px;">
+              <div class="col-sm-8"></div>
+              <div class="clearfix mt-20">
+                <button
+                  type="button"
+                  class="btn btn-outline-dark"
+                  (click)="back()"
+                >
+                  Back</button
+                >&nbsp;&nbsp;
+                <button type="submit" class="btn btn-success pull-right">
+                  Submit
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </app-card>
+  </div>
+</div>

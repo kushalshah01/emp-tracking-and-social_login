@@ -1,0 +1,185 @@
+<div class="row">
+  <div class="col-sm-12">
+    <app-card [hidHeader]="true" cardClass="user-profile-list">
+      <div class="row align-items-center m-l-0">
+        <div class="col-sm-6"></div>
+        <div class="col-sm-6 text-right">
+          <!-- <div class="btn-group" ngbDropdown [placement]="'bottom-left'">
+            <button type="button" class="btn btn-primary btn-sm">
+              Selected
+              <span class="badge badge-light">{{ selectedCount }}</span>
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary btn-sm dropdown-toggle-split"
+              [disabled]="selectedCount == 0"
+              ngbDropdownToggle
+            >
+              <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <div ngbDropdownMenu>
+              <a
+                class="dropdown-item"
+                href="javascript:"
+                (click)="activeOrDeactive(true, 'Active')"
+                >Active
+              </a>
+              <a
+                class="dropdown-item"
+                href="javascript:"
+                (click)="activeOrDeactive(false, 'In Active')"
+                >In Active
+              </a>
+              <a
+                class="dropdown-item"
+                href="javascript:"
+                (click)="removeSelectedRecord()"
+                >Remove
+              </a>
+            </div>
+          </div> -->
+          &nbsp;
+
+          <button
+            class="btn btn-icon btn-sm btn-success"
+            routerLink="create"
+            placement="top"
+            ngbTooltip="Add"
+          >
+            <i class="fas fa-plus-circle"></i></button
+          >&nbsp;
+          <button
+            class="btn btn-icon btn-sm btn-primary"
+            placement="top"
+            ngbTooltip="Refresh"
+            (click)="refreshRecord()"
+          >
+            <i class="fas fa-redo"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="dt-responsive table-responsive">
+        <table
+          datatable
+          class="table table-striped row-border"
+          [dtOptions]="dtOptions"
+          [dtTrigger]="dtTrigger"
+        >
+          <thead>
+            <tr>
+              <!-- <th>
+                <div class="custom-control custom-checkbox">
+                  <input
+                    type="checkbox"
+                    class="custom-control-input"
+                    id="customCheck1"
+                    (change)="changeSelection()"
+                    [(ngModel)]="IsSelectAll"
+                  />
+                  <label
+                    class="custom-control-label"
+                    for="customCheck1"
+                  ></label>
+                </div>
+              </th> -->
+              <th>Employee Detail</th>
+              <th>Phone</th>
+              <th>Gender</th>
+              <th>Birth Date</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let data of employeeList; let i = index">
+              <td>
+                <div class="d-inline-block align-middle">
+                  <img
+                    src="assets/images/user/user-31-512.png"
+                    alt="user image"
+                    class="img-radius align-top m-r-15"
+                    style="width: 40px;"
+                    *ngIf="!data.profileImage || data.profileImage == ''"
+                  />
+
+                  <img
+                    src="{{ data.profileImage }}"
+                    alt="user image"
+                    class="img-radius align-top m-r-15"
+                    height="40"
+                    width="40"
+                    *ngIf="!!data.profileImage && data.profileImage != ''"
+                  />
+
+                  <div class="d-inline-block">
+                    <a href="javascript:void(0)">
+                      <h6 class="m-b-0">
+                        {{ data.firstName }} {{ data.lastName }}
+                      </h6>
+                    </a>
+                    <p class="m-b-0">{{ data.email }}</p>
+                  </div>
+                </div>
+              </td>
+              <td>{{ getPhone(data?.mobileNumber) }}</td>
+              <td>{{ data.gender }}</td>
+              <td>{{ getDate(data.birthDate) | date }}</td>
+              <td>
+                <a
+                  href="javascript:void(0)"
+                  (click)="setIsActiveRecord(data.isActive, data)"
+                  placement="top"
+                  ngbTooltip="Inactivate Employee"
+                  ><span class="badge badge-primary" *ngIf="data.isActive"
+                    >Active</span
+                  >
+                </a>
+                <a
+                  href="javascript:void(0)"
+                  (click)="setIsActiveRecord(data.isActive, data)"
+                  placement="top"
+                  ngbTooltip="Activate Employee"
+                >
+                  <span class="badge badge-danger" *ngIf="!data.isActive"
+                    >InActive</span
+                  >
+                </a>
+              </td>
+              <td>
+                <button
+                  type="button"
+                  class="btn btn-icon btn-sm btn-outline-info"
+                  routerLink="map-history"
+                  placement="top"
+                  ngbTooltip="View"
+                >
+                  <i class="feather icon-eye"></i></button
+                >&nbsp;
+                <button
+                  type="button"
+                  class="btn btn-icon btn-outline-success"
+                  routerLink="/employees/{{ data.id }}"
+                  placement="top"
+                  ngbTooltip="Edit"
+                >
+                  <i class="feather icon-edit"></i></button
+                >&nbsp;
+                <button
+                  type="button"
+                  class="btn btn-icon btn-sm btn-outline-danger"
+                  (click)="deleteRecord(data)"
+                  placement="top"
+                  ngbTooltip="Remove"
+                >
+                  <i class="feather icon-trash-2"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </app-card>
+  </div>
+</div>
